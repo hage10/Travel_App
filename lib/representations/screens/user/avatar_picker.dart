@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:travel_app/core/constants/colors_contants.dart';
 import '../../../core/constants/dismesion_constant.dart';
 
 class AvatarPicker extends StatefulWidget {
@@ -92,20 +93,20 @@ class _AvatarPickerState extends State<AvatarPicker> {
             children: [
               if (_image != null)
                 Container(
-                  padding: const EdgeInsets.all(2),
-                  decoration: const BoxDecoration(
-                      color: Colors.white70, shape: BoxShape.circle),
-                  child: loadAvatar
-                      ? CircleAvatar(
-                          backgroundImage: FileImage(_image!),
-                          radius: 36,
-                        )
-                      : const SizedBox(
-                          height: 36,
-                          width: 36,
-                          child: CircularProgressIndicator(),
-                        ),
-                )
+                    padding: const EdgeInsets.all(2),
+                    decoration: const BoxDecoration(
+                        color: ColorPalette.secondaryColor,
+                        shape: BoxShape.circle),
+                    child: loadAvatar
+                        ? const SizedBox(
+                            height: 36,
+                            width: 36,
+                            child: CircularProgressIndicator(),
+                          )
+                        : CircleAvatar(
+                            backgroundImage: FileImage(_image!),
+                            radius: 36,
+                          ))
               else
                 Container(
                   padding: const EdgeInsets.all(2),

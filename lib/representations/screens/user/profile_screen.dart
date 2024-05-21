@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:travel_app/core/constants/colors_contants.dart';
 import 'package:travel_app/core/constants/dismesion_constant.dart';
 import 'package:travel_app/core/constants/textstyle_constants.dart';
 import 'package:travel_app/representations/screens/user/avatar_picker.dart';
+import 'package:travel_app/representations/screens/user/contacts/contacts_screen.dart';
 import 'package:travel_app/representations/widgets/app_bar_container.dart';
 import 'package:travel_app/representations/widgets/customize/dashline_widget.dart';
 
@@ -15,6 +18,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  late List<Contact> contacts;
+
   @override
   Widget build(BuildContext context) {
     return AppBarContainerWidget(
@@ -58,9 +63,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(kMinPadding))),
-              child: const Column(
+              child: Column(
                 children: [
-                  Row(
+                  const Row(
                     children: [
                       Icon(
                         Icons.info_outline,
@@ -70,19 +75,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Text("Thông tin cá nhân")
                     ],
                   ),
-                  DashlineWidget(),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.contact_emergency_outlined,
-                        color: ColorPalette.primaryColor,
-                      ),
-                      SizedBox(width: kDefaultPadding),
-                      Text("Danh bạ")
-                    ],
+                  const DashlineWidget(),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(ContactsScreen.routeName);
+                    },
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.contact_emergency_outlined,
+                          color: ColorPalette.primaryColor,
+                        ),
+                        SizedBox(width: kDefaultPadding),
+                        Text("Danh bạ")
+                      ],
+                    ),
                   ),
-                  DashlineWidget(),
-                  Row(
+                  const DashlineWidget(),
+                  const Row(
                     children: [
                       Icon(
                         Icons.location_on_outlined,
@@ -92,8 +102,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Text("Vị trí")
                     ],
                   ),
-                  DashlineWidget(),
-                  Row(
+                  const DashlineWidget(),
+                  const Row(
                     children: [
                       Icon(
                         Icons.notifications_none,
