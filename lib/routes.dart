@@ -14,6 +14,7 @@ import 'package:travel_app/representations/screens/select_date_screen.dart';
 import 'package:travel_app/representations/screens/select_room_screen.dart';
 import 'package:travel_app/representations/screens/sort_by_screen.dart';
 import 'package:travel_app/representations/screens/splash_screen.dart';
+import 'package:travel_app/representations/screens/user/profile_screen.dart';
 
 import 'representations/screens/facilities_screen.dart';
 import 'representations/screens/hotel_detail_screen.dart';
@@ -35,6 +36,7 @@ final Map<String, WidgetBuilder> routes = {
   FacilitiesScreen.routeName: (context) => const FacilitiesScreen(),
   PropertyTypeScreen.routeName: (context) => const PropertyTypeScreen(),
   SortByScreen.routeName: (context) => const SortByScreen(),
+  ProfileScreen.routeName: (context) => const ProfileScreen(),
 };
 
 MaterialPageRoute<dynamic>? generateRoutes(RouteSettings settings) {

@@ -4,6 +4,7 @@ import 'package:travel_app/core/constants/colors_contants.dart';
 import 'package:travel_app/core/constants/dismesion_constant.dart';
 import 'package:travel_app/representations/screens/booking/booking_screen.dart';
 import 'package:travel_app/representations/screens/home_screen.dart';
+import 'package:travel_app/representations/screens/user/profile_screen.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
@@ -25,7 +26,7 @@ class _MainAppState extends State<MainApp> {
           Container(color: Colors.blue),
           Container(color: Colors.blue),
           // const BookingScreen(),
-          Container(color: Colors.brown),
+          const ProfileScreen(),
         ],
       ),
       bottomNavigationBar: SalomonBottomBar(
