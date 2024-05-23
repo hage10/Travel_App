@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:travel_app/data/models/hotel_model.dart';
 import 'package:travel_app/representations/screens/auth/forgot_password_screen.dart';
 import 'package:travel_app/representations/screens/auth/login_screen.dart';
@@ -14,6 +15,8 @@ import 'package:travel_app/representations/screens/select_date_screen.dart';
 import 'package:travel_app/representations/screens/select_room_screen.dart';
 import 'package:travel_app/representations/screens/sort_by_screen.dart';
 import 'package:travel_app/representations/screens/splash_screen.dart';
+import 'package:travel_app/representations/screens/user/location/location_screen.dart';
+import 'package:travel_app/representations/screens/user/notifications/notifications.dart';
 import 'package:travel_app/representations/screens/user/profile_screen.dart';
 
 import 'representations/screens/facilities_screen.dart';
@@ -39,6 +42,8 @@ final Map<String, WidgetBuilder> routes = {
   SortByScreen.routeName: (context) => const SortByScreen(),
   ProfileScreen.routeName: (context) => const ProfileScreen(),
   ContactsScreen.routeName: (context) => const ContactsScreen(),
+  NotificationScreen.routeName: (context) => const NotificationScreen(),
+  // LocationScreen.routeName: (context) => const LocationScreen(),
 };
 
 MaterialPageRoute<dynamic>? generateRoutes(RouteSettings settings) {

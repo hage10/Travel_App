@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:travel_app/core/constants/colors_contants.dart';
@@ -6,6 +8,8 @@ import 'package:travel_app/core/constants/dismesion_constant.dart';
 import 'package:travel_app/core/constants/textstyle_constants.dart';
 import 'package:travel_app/representations/screens/user/avatar_picker.dart';
 import 'package:travel_app/representations/screens/user/contacts/contacts_screen.dart';
+import 'package:travel_app/representations/screens/user/location/location_screen.dart';
+import 'package:travel_app/representations/screens/user/notifications/notifications.dart';
 import 'package:travel_app/representations/widgets/app_bar_container.dart';
 import 'package:travel_app/representations/widgets/customize/dashline_widget.dart';
 
@@ -92,26 +96,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   const DashlineWidget(),
-                  const Row(
-                    children: [
-                      Icon(
-                        Icons.location_on_outlined,
-                        color: ColorPalette.primaryColor,
-                      ),
-                      SizedBox(width: kDefaultPadding),
-                      Text("Vị trí")
-                    ],
+                  GestureDetector(
+                    onTap: () {
+                      // Navigator.of(context).pushNamed(LocationScreen.routeName);
+                    },
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.location_on_outlined,
+                          color: ColorPalette.primaryColor,
+                        ),
+                        SizedBox(width: kDefaultPadding),
+                        Text("Vị trí")
+                      ],
+                    ),
                   ),
                   const DashlineWidget(),
-                  const Row(
-                    children: [
-                      Icon(
-                        Icons.notifications_none,
-                        color: ColorPalette.primaryColor,
-                      ),
-                      SizedBox(width: kDefaultPadding),
-                      Text("Thông báo")
-                    ],
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushNamed(NotificationScreen.routeName);
+                    },
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.notifications_none,
+                          color: ColorPalette.primaryColor,
+                        ),
+                        SizedBox(width: kDefaultPadding),
+                        Text("Thông báo")
+                      ],
+                    ),
                   ),
                 ],
               ),
