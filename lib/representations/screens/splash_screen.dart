@@ -30,15 +30,15 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 2));
     if (ignoreIntroScreen != null && ignoreIntroScreen) {
       if (token == null) {
-        Navigator.of(context).pushNamed(LoginScreen.routeName);
+        Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
 
         return;
       } else {
-        Navigator.of(context).pushNamed(MainApp.routeName);
+        Navigator.of(context).pushReplacementNamed(MainApp.routeName);
       }
     } else {
       LocalStorageHelper.setValue("ignoreIntroScreen", true);
-      Navigator.of(context).pushNamed(IntroScreen.routeName);
+      Navigator.of(context).pushReplacementNamed(IntroScreen.routeName);
     }
   }
 

@@ -25,7 +25,7 @@ class ApiException implements Exception {
         message = "Connection to API server error";
         break;
       case DioExceptionType.unknown:
-        message = "Unexpected error occurred";
+        message = "Unexpected error occurred  qư  ";
         break;
       default:
         message = "Something went wrong";

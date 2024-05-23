@@ -1,17 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:travel_app/core/constants/colors_contants.dart';
 import 'package:travel_app/core/constants/dismesion_constant.dart';
 import 'package:travel_app/core/constants/textstyle_constants.dart';
 import 'package:travel_app/representations/screens/user/avatar_picker.dart';
 import 'package:travel_app/representations/screens/user/contacts/contacts_screen.dart';
-import 'package:travel_app/representations/screens/user/location/location_screen.dart';
 import 'package:travel_app/representations/screens/user/notifications/notifications.dart';
 import 'package:travel_app/representations/widgets/app_bar_container.dart';
 import 'package:travel_app/representations/widgets/customize/dashline_widget.dart';
+
+import '../../../core/helpers/page_route_helper.dart';
+import '../../../routes.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -82,7 +81,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const DashlineWidget(),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushNamed(ContactsScreen.routeName);
+                      Navigator.of(context).push(CustomPageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            const ContactsScreen(),
+                      ));
                     },
                     child: const Row(
                       children: [
@@ -97,9 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const DashlineWidget(),
                   GestureDetector(
-                    onTap: () {
-                      // Navigator.of(context).pushNamed(LocationScreen.routeName);
-                    },
+                    onTap: () {},
                     child: const Row(
                       children: [
                         Icon(
@@ -114,8 +114,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const DashlineWidget(),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(NotificationScreen.routeName);
+                      // Navigator.of(context)
+                      //     .pushNamed(NotificationScreen.routeName);
+
+                      Navigator.of(context).push(CustomPageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            const NotificationScreen(),
+                      ));
                     },
                     child: const Row(
                       children: [

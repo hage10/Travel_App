@@ -66,36 +66,58 @@ class _ContactsScreenState extends State<ContactsScreen> {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: contacts.length ?? 0,
+              itemCount: contacts.length,
               itemBuilder: (context, index) {
                 final contact = contacts[index];
-                return Container(
-                  margin: const EdgeInsets.only(bottom: kItemPadding),
-                  decoration: const BoxDecoration(
+                return Dismissible(
+                  key: Key(contact.id),
+                  direction: DismissDirection.endToStart,
+                  background: Container(
+                    color: Colors.red,
+                    alignment: Alignment.centerRight,
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    margin: const EdgeInsets.only(bottom: 12),
+                    child: const Icon(
+                      Icons.delete,
                       color: Colors.white,
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(kMinPadding))),
-                  child: ListTile(
-                    leading: (contact.thumbnail != null)
-                        ? ClipOval(
-                            child: SizedBox(
+                    ),
+                  ),
+                  onDismissed: (direction) {
+                    setState(() {
+                      contacts.removeAt(index);
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content: Text('${contact.displayName} dismissed')),
+                    );
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(kItemPadding)),
+                    child: ListTile(
+                      leading: (contact.thumbnail != null)
+                          ? ClipOval(
+                              child: SizedBox(
+                                height: kBottomBarIconSize * 3,
+                                width: kBottomBarIconSize * 3,
+                                child: Image.memory(
+                                  contact.thumbnail!,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            )
+                          : const SizedBox(
                               height: kBottomBarIconSize * 3,
                               width: kBottomBarIconSize * 3,
-                              child: Image.memory(
-                                contact.thumbnail!,
-                                fit: BoxFit.fill,
+                              child: CircleAvatar(
+                                child: Icon(Icons.person),
                               ),
                             ),
-                          )
-                        : const SizedBox(
-                            height: kBottomBarIconSize * 3,
-                            width: kBottomBarIconSize * 3,
-                            child: CircleAvatar(
-                              child: Icon(Icons.person),
-                            ),
-                          ),
-                    title: Text(contact.displayName ?? ''),
-                    subtitle: Text(contact.phones[0].number),
+                      title: Text(contact.displayName ?? ''),
+                      subtitle: Text(contact.phones[0].number),
+                    ),
                   ),
                 );
               },

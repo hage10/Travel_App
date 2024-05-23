@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
@@ -12,6 +13,10 @@ import 'package:travel_app/representations/widgets/customize/button_widget.dart'
 import 'package:travel_app/representations/widgets/forms/form_checkbox.dart';
 import '../../../core/constants/textstyle_constants.dart';
 import '../../../core/extensions/validator.dart';
+import '../../../core/helpers/page_route_helper.dart';
+import '../../../data/network/api/auth_api.dart';
+import '../../../data/network/bloc/login_bloc.dart';
+import '../../../data/network/service/auth_service.dart';
 import '../../widgets/forms/form_input_with _label.dart';
 import '../../widgets/customize/solid_line_text_widget.dart';
 
@@ -24,12 +29,70 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _emailController =
+      TextEditingController(text: "eve.holt@reqres.in");
   final TextEditingController _passController = TextEditingController();
   bool isLoading = false;
   bool remember = false;
   // final FocusNode _focusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
+
+  late LoginBloc _loginBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    final authRepository = AuthRepository();
+    final authService = AuthService(authRepository: authRepository);
+    _loginBloc = LoginBloc(authService: authService);
+
+    _loginBloc.loginStream.listen((status) {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (status == true) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => const MainApp(), // Điều hướng đến HomeScreen
+        ));
+      } else {
+        toastification.show(
+          primaryColor: Colors.red,
+          context: context, // optional if you use ToastificationWrapper
+          title: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Thất bại!"),
+            ],
+          ),
+          description: Text(
+            status,
+            style: const TextStyle(color: Colors.black),
+          ),
+
+          autoCloseDuration: const Duration(seconds: 3),
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passController.dispose();
+    _loginBloc.dispose();
+    super.dispose();
+  }
+
+  void _login() {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      _loginBloc.login(_emailController.text, _passController.text);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppBarContainerWidget(
@@ -54,8 +117,8 @@ class _LoginScreenState extends State<LoginScreen> {
               LabelledFormInput(
                   placeholder: "Password",
                   obscureText: true,
-                  validator: (value) =>
-                      validateRequiredField(value, 'Password'),
+                  // validator: (value) =>
+                  // validateRequiredField(value, 'Password'),
                   keyboardType: TextInputType.visiblePassword,
                   controller: _passController,
                   label: "Password"),
@@ -80,13 +143,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                   ),
-                  GestureDetector(
+                  InkWell(
                     onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(ForgotPasswordCsreen.routeName);
+                      Navigator.of(context).push(CustomPageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            const ForgotPasswordCsreen(),
+                      ));
                     },
-                    child: const Text(
+                    child: Text(
                       "Forgot password?",
+                      style: TextStyles.defaultStyle.primaryTextColor,
                     ),
                   )
                 ],
@@ -97,29 +163,30 @@ class _LoginScreenState extends State<LoginScreen> {
               ButtonWidget(
                 title: "Login",
                 isLoading: isLoading,
-                onTap: () async {
-                  if (_formKey.currentState!.validate()) {
-                    setState(() {
-                      isLoading = true;
-                    });
-                    await Future.delayed(const Duration(seconds: 2));
-                    isLoading = false;
-                    Navigator.of(context)
-                        .pushReplacementNamed(MainApp.routeName);
-                    toastification.show(
-                      context:
-                          context, // optional if you use ToastificationWrapper
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Email: ${_emailController.text}'),
-                          Text('Password: ${_passController.text}'),
-                        ],
-                      ),
-                      autoCloseDuration: const Duration(seconds: 3),
-                    );
-                  }
-                },
+                onTap: _login,
+                // onTap: () async {
+                // if (_formKey.currentState!.validate()) {
+                //   setState(() {
+                //     isLoading = true;
+                //   });
+                //   await Future.delayed(const Duration(seconds: 2));
+                //   isLoading = false;
+                //   Navigator.of(context)
+                //       .pushReplacementNamed(MainApp.routeName);
+                //   toastification.show(
+                //     context:
+                //         context, // optional if you use ToastificationWrapper
+                //     title: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         Text('Email: ${_emailController.text}'),
+                //         Text('Password: ${_passController.text}'),
+                //       ],
+                //     ),
+                //     autoCloseDuration: const Duration(seconds: 3),
+                //   );
+                // }
+                // },
               ),
               const SizedBox(
                 height: kMediumPadding,
@@ -208,8 +275,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyles.defaultStyle.primaryTextColor.bold,
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Navigator.of(context)
-                                .pushNamed(SignUpScreen.routeName);
+                            Navigator.of(context).push(CustomPageRouteBuilder(
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) =>
+                                      const SignUpScreen(),
+                            ));
                           }),
                   ],
                 ),
