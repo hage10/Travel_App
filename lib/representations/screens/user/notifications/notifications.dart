@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:travel_app/representations/screens/user/notifications/notification_controller.dart';
 import 'package:travel_app/representations/widgets/app_bar_container.dart';
 
-class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({super.key});
+class LocalNotification extends StatefulWidget {
+  const LocalNotification({super.key});
   static const String routeName = '/notification';
 
   @override
-  _NotificationScreenState createState() => _NotificationScreenState();
+  _LocalNotificationState createState() => _LocalNotificationState();
 }
 
-class _NotificationScreenState extends State<NotificationScreen> {
+class _LocalNotificationState extends State<LocalNotification> {
   @override
   void initState() {
     super.initState();

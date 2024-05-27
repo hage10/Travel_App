@@ -11,6 +11,7 @@ import 'package:travel_app/representations/widgets/customize/dashline_widget.dar
 
 import '../../../core/helpers/page_route_helper.dart';
 import '../../../routes.dart';
+import 'location/location_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -99,7 +100,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const DashlineWidget(),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(CustomPageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            const GeolocatorWidget(),
+                      ));
+                    },
                     child: const Row(
                       children: [
                         Icon(
@@ -119,7 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                       Navigator.of(context).push(CustomPageRouteBuilder(
                         pageBuilder: (context, animation, secondaryAnimation) =>
-                            const NotificationScreen(),
+                            const LocalNotification(),
                       ));
                     },
                     child: const Row(

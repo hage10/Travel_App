@@ -22,6 +22,7 @@ import 'package:travel_app/representations/screens/user/profile_screen.dart';
 import 'representations/screens/facilities_screen.dart';
 import 'representations/screens/hotel_detail_screen.dart';
 import 'representations/screens/user/contacts/contacts_screen.dart';
+import 'representations/screens/user/notifications/notifications_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
   SplashScreen.routeName: (context) => const SplashScreen(),
@@ -43,6 +44,7 @@ final Map<String, WidgetBuilder> routes = {
   ProfileScreen.routeName: (context) => const ProfileScreen(),
   ContactsScreen.routeName: (context) => const ContactsScreen(),
   NotificationScreen.routeName: (context) => const NotificationScreen(),
+  LocalNotification.routeName: (context) => const LocalNotification(),
   // LocationScreen.routeName: (context) => const LocationScreen(),
 };
 

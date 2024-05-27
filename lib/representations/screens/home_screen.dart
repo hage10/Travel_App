@@ -6,6 +6,7 @@ import 'package:travel_app/core/helpers/image_helper.dart';
 import 'package:travel_app/representations/screens/auth/login_screen.dart';
 import 'package:travel_app/representations/screens/facilities_screen.dart';
 import 'package:travel_app/representations/screens/hotel_booking_screen.dart';
+import 'package:travel_app/representations/screens/user/notifications/notifications_screen.dart';
 import 'package:travel_app/representations/widgets/app_bar_container.dart';
 
 import '../../core/constants/textstyle_constants.dart';
@@ -157,10 +158,18 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             const Spacer(),
-            const Icon(
-              FontAwesomeIcons.bell,
-              size: kDefaultIconSize,
-              color: Colors.white,
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).push(CustomPageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      const NotificationScreen(),
+                ));
+              },
+              icon: const Icon(
+                FontAwesomeIcons.bell,
+                size: kDefaultIconSize,
+                color: Colors.white,
+              ),
             ),
             const SizedBox(
               width: kMinPadding,
