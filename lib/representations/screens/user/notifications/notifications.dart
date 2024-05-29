@@ -14,7 +14,6 @@ class _LocalNotificationState extends State<LocalNotification> {
   @override
   void initState() {
     super.initState();
-    NotificationController.startListeningNotificationEvents();
   }
 
   @override

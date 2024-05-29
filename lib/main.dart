@@ -11,6 +11,8 @@ void main() async {
   await LocalStorageHelper.initLocalStorageHelper();
   await NotificationController.initializeLocalNotifications();
   await NotificationController.initializeIsolateReceivePort();
+  await NotificationController.startListeningNotificationEvents();
+
   runApp(const MyApp());
 }
 

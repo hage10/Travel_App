@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:travel_app/core/constants/colors_contants.dart';
 import 'package:travel_app/core/constants/dismesion_constant.dart';
-import 'package:travel_app/representations/screens/booking/booking_screen.dart';
 import 'package:travel_app/representations/screens/home_screen.dart';
 import 'package:travel_app/representations/screens/user/profile_screen.dart';
 

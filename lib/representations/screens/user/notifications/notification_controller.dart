@@ -69,11 +69,12 @@ class NotificationController {
   @pragma('vm:entry-point')
   static Future<void> onActionReceivedMethod(
       ReceivedAction receivedAction) async {
+    print('receivedActionherhehehehe----------:${receivedAction.actionType}');
     if (receivedAction.actionType == ActionType.SilentAction ||
         receivedAction.actionType == ActionType.SilentBackgroundAction) {
       // For background actions, you must hold the execution until the end
       print(
-          'Message sent via notification input: "${receivedAction.buttonKeyInput}"');
+          'Message sent via notification input---------------: "${receivedAction.buttonKeyInput}"');
       await executeLongTaskInBackground();
     } else {
       // this process is only necessary when you need to redirect the user

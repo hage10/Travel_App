@@ -12,7 +12,6 @@ import 'package:travel_app/representations/widgets/app_bar_container.dart';
 import 'package:travel_app/representations/widgets/customize/button_widget.dart';
 import 'package:travel_app/representations/widgets/forms/form_checkbox.dart';
 import '../../../core/constants/textstyle_constants.dart';
-import '../../../core/extensions/validator.dart';
 import '../../../core/helpers/page_route_helper.dart';
 import '../../../data/network/api/auth_api.dart';
 import '../../../data/network/bloc/login_bloc.dart';

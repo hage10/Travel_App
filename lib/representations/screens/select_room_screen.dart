@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:travel_app/core/constants/dismesion_constant.dart';
 import 'package:travel_app/core/helpers/asset_helper.dart';
 import 'package:travel_app/data/models/room_model.dart';
 import 'package:travel_app/representations/screens/check_out_screen.dart';
 import 'package:travel_app/representations/widgets/app_bar_container.dart';
-import 'package:travel_app/representations/widgets/item_utility_hotel_widget.dart';
 
 import '../widgets/item_room_booking_widget.dart';
 
