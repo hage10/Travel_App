@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travel_app/core/constants/colors_contants.dart';
 import 'package:travel_app/core/constants/dismesion_constant.dart';
 import 'package:travel_app/core/helpers/asset_helper.dart';
 import 'package:travel_app/core/helpers/image_helper.dart';
@@ -11,6 +12,7 @@ import 'package:travel_app/representations/widgets/app_bar_container.dart';
 
 import '../../core/constants/textstyle_constants.dart';
 import '../../core/helpers/page_route_helper.dart';
+import 'qr_code/qr_code_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -256,6 +258,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Color(0xffF77777), () {
                   Navigator.of(context).pushNamed(FacilitiesScreen.routeName);
                 }, 'Flights'),
+              ),
+              const SizedBox(width: kDefaultPadding),
+              Expanded(
+                child: _buildItemCategory(
+                    const Icon(
+                      Icons.qr_code,
+                      size: kDefaultIconSize,
+                      color: ColorPalette.primaryColor,
+                    ),
+                    ColorPalette.primaryColor.withOpacity(0.2), () {
+                  Navigator.of(context).push(CustomPageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        const QrCodeScreen(),
+                  ));
+                }, 'QR code'),
               ),
               const SizedBox(width: kDefaultPadding),
               Expanded(

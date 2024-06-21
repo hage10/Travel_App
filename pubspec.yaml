@@ -54,6 +54,12 @@ dependencies:
   awesome_notifications: ^0.9.3+1
   geolocator: ^7.6.0
   geocoding: ^2.0.1
+  qr_flutter: ^4.1.0
+  mobile_scanner: ^5.1.1
+  syncfusion_flutter_charts: ^25.2.6
+  firebase_core: ^2.32.0
+  firebase_messaging: ^14.9.4
+  local_auth: ^2.2.0
 
 dev_dependencies:
   flutter_test:

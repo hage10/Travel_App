@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:travel_app/core/constants/colors_contants.dart';
 import 'package:travel_app/core/constants/dismesion_constant.dart';
+import 'package:travel_app/representations/screens/chart/chart_screen.dart';
 import 'package:travel_app/representations/screens/home_screen.dart';
 import 'package:travel_app/representations/screens/user/profile_screen.dart';
 
@@ -22,7 +23,8 @@ class _MainAppState extends State<MainApp> {
         index: _currentIndex,
         children: [
           const HomeScreen(),
-          Container(color: Colors.blue),
+          // Container(color: Colors.blue),
+          ChartScreen(),
           Container(color: Colors.blue),
           // const BookingScreen(),
           const ProfileScreen(),
