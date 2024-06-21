@@ -1,6 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:toastification/toastification.dart';
 import 'package:travel_app/core/constants/dismesion_constant.dart';
 import 'package:travel_app/core/helpers/asset_helper.dart';
@@ -12,6 +12,7 @@ import 'package:travel_app/representations/widgets/app_bar_container.dart';
 import 'package:travel_app/representations/widgets/customize/button_widget.dart';
 import 'package:travel_app/representations/widgets/forms/form_checkbox.dart';
 import '../../../core/constants/textstyle_constants.dart';
+import '../../../core/helpers/local_storage_helper.dart';
 import '../../../core/helpers/page_route_helper.dart';
 import '../../../data/network/api/auth_api.dart';
 import '../../../data/network/bloc/login_bloc.dart';
@@ -35,8 +36,9 @@ class _LoginScreenState extends State<LoginScreen> {
   bool remember = false;
   // final FocusNode _focusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
-
   late LoginBloc _loginBloc;
+
+  final LocalAuthentication auth = LocalAuthentication();
 
   @override
   void initState() {
@@ -89,6 +91,46 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoading = true;
       });
       _loginBloc.login(_emailController.text, _passController.text);
+    }
+  }
+
+  Future<bool> hasBiometrics() async {
+    final isAvailable = await auth.canCheckBiometrics;
+    final isDeviceSupported = await auth.isDeviceSupported();
+    return isAvailable && isDeviceSupported;
+  }
+
+  Future<bool> _handleBiometrics() async {
+    final isAuthAvailable = await hasBiometrics();
+    if (!isAuthAvailable) return false;
+    try {
+      final res = await auth.authenticate(
+        localizedReason:
+            'Scan your fingerprint (or face or whatever) to authenticate',
+        options: const AuthenticationOptions(
+          stickyAuth: true,
+          biometricOnly: true,
+        ),
+      );
+      return res;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<void> _loginWithBiometrics() async {
+    final isAuthenticated = await _handleBiometrics();
+    if (isAuthenticated) {
+      final String email = LocalStorageHelper.getValue("email");
+      final String password = LocalStorageHelper.getValue("password");
+      setState(() {
+        isLoading = true;
+      });
+      _loginBloc.login(email, password);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Xác thực thất bại. Vui lòng thử lại.')),
+      );
     }
   }
 
@@ -159,33 +201,19 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: kDefaultPadding,
               ),
-              ButtonWidget(
-                title: "Login",
-                isLoading: isLoading,
-                onTap: _login,
-                // onTap: () async {
-                // if (_formKey.currentState!.validate()) {
-                //   setState(() {
-                //     isLoading = true;
-                //   });
-                //   await Future.delayed(const Duration(seconds: 2));
-                //   isLoading = false;
-                //   Navigator.of(context)
-                //       .pushReplacementNamed(MainApp.routeName);
-                //   toastification.show(
-                //     context:
-                //         context, // optional if you use ToastificationWrapper
-                //     title: Column(
-                //       crossAxisAlignment: CrossAxisAlignment.start,
-                //       children: [
-                //         Text('Email: ${_emailController.text}'),
-                //         Text('Password: ${_passController.text}'),
-                //       ],
-                //     ),
-                //     autoCloseDuration: const Duration(seconds: 3),
-                //   );
-                // }
-                // },
+              Row(
+                children: [
+                  Expanded(
+                    child: ButtonWidget(
+                      title: "Login",
+                      isLoading: isLoading,
+                      onTap: _login,
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: _loginWithBiometrics,
+                      icon: const Icon(Icons.fingerprint))
+                ],
               ),
               const SizedBox(
                 height: kMediumPadding,
@@ -243,6 +271,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           ImageHelper.loadFromAsset(
                             AssetHelper.icoFacebook,
                           ),
+                          // SvgPicture.asset(
+                          //   AssetHelper.icoGoogle,
+                          //   width: 30, // Điều chỉnh kích thước nếu cần
+                          //   height: 30,
+                          // ),
                           const SizedBox(
                             width: kDefaultPadding,
                           ),
@@ -282,7 +315,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           }),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
